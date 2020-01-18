@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.MinSuModelMapper" >
+  <resultMap id="BaseResultMap" type="com.jk.model.MinSuModel" >
+    <id column="msid" property="msid" jdbcType="INTEGER" />
+    <result column="msname" property="msname" jdbcType="VARCHAR" />
+    <result column="msinfo" property="msinfo" jdbcType="VARCHAR" />
+    <result column="msyizhu" property="msyizhu" jdbcType="INTEGER" />
+    <result column="msprice" property="msprice" jdbcType="DECIMAL" />
+    <result column="msaddressid" property="msaddressid" jdbcType="VARCHAR" />
+    <result column="mszhuren" property="mszhuren" jdbcType="VARCHAR" />
+    <result column="msphone" property="msphone" jdbcType="VARCHAR" />
+    <result column="msimg" property="msimg" jdbcType="VARCHAR" />
+    <result column="mspz" property="mspz" jdbcType="VARCHAR" />
+    <result column="mszhurenimg" property="mszhurenimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryMinsu" resultMap="BaseResultMap">
+    select 
+    *
+    from ms_minsu
+  </select>
+  <select id="queryMinsuOne" resultMap="BaseResultMap">
+    select
+    *
+    from ms_minsu
+    where msid=#{minsuid}
+  </select>
+</mapper>

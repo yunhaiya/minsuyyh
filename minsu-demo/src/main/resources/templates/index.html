@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap 插件 css -->
+    <link href="../js/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- Bootstrap 核心css -->
+    <link href="../js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap TreeView css -->
+    <link href="../js/bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
+
+    <!-- Bootstrap addTabs css -->
+    <link href="../js/bootStrap-addTabs/bootstrap.addtabs.css" rel="stylesheet">
+
+    <!-- Bootstrap table css -->
+    <link href="../js/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker css -->
+    <link href="../js/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+    <!-- bootstrap-dialog css -->
+    <link href="../js/bootstrap-dialog/dist/css/bootstrap-dialog.css" rel="stylesheet">
+    <!-- bootstrap-fileinput css -->
+    <link href="../js/bootstrap-fileinput/css/fileinput.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+            <div id="tree"> </div>
+        </div>
+        <div class="col-md-9 column">
+            <!-- 选项卡  tabs -->
+            <ul id="myTab" class="nav nav-tabs">
+                <li >
+                    <a href="#home" data-toggle="tab"> 首页</a>
+                </li>
+            </ul>
+            <!--想要打开tab页内容，需要把对应的ul和要打开的内容tab放在一个div里  -->
+            <div class="tab-content">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--jQuery核心js  -->
+<script src="../js/jquery.min.js"></script>
+<!-- bootstrap 核心js文件 -->
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<!-- bootStrap TreeView -->
+<script src="../js/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+
+<!-- bootStrap addTabs -->
+<script src="../js/bootStrap-addTabs/bootstrap.addtabs.js"></script>
+
+<!-- bootStrap table -->
+<script src="../js/bootstrap-table/dist/bootstrap-table.js"></script>
+<!-- bootStrap table 语言包中文-->
+<script src="../js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+
+<!-- bootstrap-datetimepicker -->
+<script src="../js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="../js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<!-- bootstrap-dialog -->
+<script src="../js/bootstrap-dialog/dist/js/bootstrap-dialog.js"></script>
+<!-- bootstrap-fileinput -->
+<script src="../js/bootstrap-fileinput/js/fileinput.js"></script>
+<script src="../js/bootstrap-fileinput/js/locales/zh.js"></script>
+<script type="text/javascript">
+
+    // 	1.定一个函数 用来获取树的数据
+    function queryTreeData(){
+        var datas = "";
+        $.ajax({
+            url:"../menus/queryMenusTree",
+            type:"post",
+            async:false,
+            success:function(data){
+                datas = data;
+            },
+        })
+        return datas
+    }
+    //		2.构建treeview树
+    $(function(){
+// 		console.info(queryTreeData())
+        $("#tree").treeview({
+            data:queryTreeData(),
+            onNodeSelected:function(event,node){
+// 				1.通过ajax获取展示内容
+                $.ajax({
+                    type:"post",
+                    url:"../"+node.href,
+                    success:function(info){
+                        //添加选项卡
+                        $.addtabs.add({
+                            id:node.id,
+                            title:node.text,
+                            content:info,
+                        })
+                    }
+                })
+
+            }
+        })
+    })
+
+
+</script>
+</body>
+</html>

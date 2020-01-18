@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.dao.MenusDao">
+
+<select id="queryMenuTreeByPid"  resultType="com.jk.model.Menus">
+	select * from ms_tree where pid = #{pid}
+</select>
+
+
+</mapper>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table id="wuliu-table"></table>
+<script>
+    $(function(){
+        $("#wuliu-table").bootstrapTable({
+            url:"../menus/queryMinSu",
+            striped: true,//隔行变色
+            showColumns:true,//是否显示 内容列下拉框
+            showPaginationSwitch:true,//是否显示 数据条数选择框
+            minimumCountColumns:2,//最小留几列 默认值1
+            showRefresh:true,//显示刷新按钮
+            showToggle:true,//显示切换视图
+            //search:true,//是否显示搜索框
+            //searchOnEnterKey:true,//设置为 true时，按回车触发搜索方法，否则自动触发搜索方法
+            pagination:true,//开启分页
+            paginationLoop:true,//开启分页无限循环
+            pageNumber:1,//当前页数
+            pageSize:2,//每页条数
+            pageList:[1,2,3,4],//如果设置了分页，设置可供选择的页面数据条数。设置为All 则显示所有记录。
+            sidePagination:"server",//
+            method:'post',//发送请求的方式
+            contentType:"application/x-www-form-urlencoded",//必须的否则条件查询时会乱码
+            queryParams:function(obj){
+                return {
+                    wuliunum:$("#num").val(),
+                    page:this.pageNumber,//当前页
+                    rows:this.pageSize //每页条数
+                }
+            },
+            columns: [
+                {checkbox:true,},
+                {field:'wuliunum',title:'编号',idField:true,width:100},
+                { field: 'status',title: '状态',width: 100},
+                {field: 'datetime',title: '更新时间',width: 100},
+                {field: 'info',title: '物流信息', width: 100},
+                {field: 'fh',title: '发货人信息', width: 100,
+                    formatter:function(value,row,index){
+                        return row.fhaddress+"——"+row.fhman+"——"+row.fhtel;
+                    }
+                },
+                {field: 'sh',title: '收货人信息', width: 100,
+                    formatter:function(value,row,index){
+                        return row.shaddress+"——"+row.shman+"——"+row.shtel;
+                    }
+                },
+                {field: 'act',title: '操作', width: 100,
+                    formatter:function(value,row,index){
+                        return "<input type='button' value='修改'onclick='editWuliu(\""+row.id+"\")'>";
+                    }
+                }]
+        })
+    })
+</script>
+</body>
+
+</html>

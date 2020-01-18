@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- title of site -->
+    <title>爱窦民宿</title>
+    <!-- For favicon png -->
+    <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png"/>
+    <link rel="stylesheet" href="//cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--  日期相关js  -->
+    <link href="css/style.css" rel="stylesheet" type="../datew/text/css" />
+    <script src="../js/jquery-2.1.4.min.js"></script>
+    <script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!--回显关联ID-->
+<input type="hidden" name="mimg" th:value="${session.minsu.msid}"  id="aid" class="form-control"  />
+<div class="row" id="explores" >
+    <div class="col-md-12" >
+        <span id="aaaId"></span>
+    </div>
+</div>
+<!--分割上下-->
+<div class="jumbotron">
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-2 column"></div>
+                <div class="col-md-4 column">
+                    <!--         房间介绍         -->
+                    <div class="media">
+                        <!--           房东头像             -->
+                        <a href="#" class="pull-left">
+                            <img src="../assets/images/explore/e2.jpg" class="media-object" alt='' height="50px" width="50px"/>
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading-left">
+                                房间描述
+                            </h4>
+                            <span th:text="${session.minsu.msinfo}"></span>
+                        </div>
+                    </div>
+                    <!--         内部情况         -->
+                    <div class="media">
+                        <div class="media-body">
+                            <h4 class="media-heading-left">
+                                内部情况
+                            </h4>
+                            <span th:text="${session.minsu.msinfo}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 column">
+                </div>
+                <div class="col-md-4 column">
+                    <div id="search" class="box">
+                        <div class="timeDateTwo">
+                            <label>开始时间：</label>
+                            <input id="J_date_1" type="text"  />
+                            <label>退房时间：</label>
+                            <input id="J_date_2" type="text"  />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-default btn-success btn-block">按钮</button>
+                </div>
+            </div>
+            <!--      地图      -->
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 日期时间 相关js-->
+<script type="text/javascript" src="../datew/js/date.js"></script>
+<script type="text/javascript" src="../datew/js/script.js"></script>
+</body>
+
+<script>
+    $(function (){
+        queryMsImg();
+    })
+    function queryMsImg() {
+        var  id=$("#aid").val();
+        $.ajax({
+            url:"../user/queryMsImg",
+            data:{minsuid:id},
+            type:"GET",
+            success:function (data){
+                var Cartable = "";
+                Cartable +=
+                    '<div class="row" style="height: 300px">'+
+                    '<div class="col-md-6" style="background-color: ;height:300px">'+
+                    /*主*/
+                    '<img src="'+data[0].msfimg+'" style="height:333px;px;width:100%;display: block">'+
+                    '</div>'+
+                    '<div class="col-md-6" style=";height:300px">'+
+                    '<div class="row" style="height: 300px">'+
+                    '<div class="col-md-6" style="background-color: ;width:50%;height:50%">'+
+                    /*副*/
+                    '<img src="'+data[1].msfimg+'" style="height:180px;width:100%;height:100%;display: block">'+
+                    '</div>'+
+                    '<div class="col-md-6" style="background-color: ;width:50%;height:50%">'+
+                    /*副*/
+                    '<img src="'+data[2].msfimg+'" style="height:180px;width:100%;height: 100%;display: block">'+
+                    '</div>'+
+                    '<div class="col-md-6" style="background-color: ;width:50%;height:50%">'+
+                    /*副*/
+                    '<img src="'+data[3].msfimg+'" style="height:180px;width:100%;display: block">'+
+                    '</div>'+
+                    '<div class="col-md-6" style="background-color: ;width:50%;height:50%">'+
+                    /*副*/
+                    '<img src="'+data[4].msfimg+'" style="height:180px;width:100%;display: block">'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>'
+                $("#aaaId").html(Cartable)
+            }
+        })
+    }
+</script>
+</html>
